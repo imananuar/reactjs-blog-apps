@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function BlogList({blogs, title, handleDelete}) {
     // Destructuring props to {blogs, title}
@@ -11,8 +12,10 @@ function BlogList({blogs, title, handleDelete}) {
             // Kalau letak props.belok, then it will become belok = {blogs}
 
             <div className="blog-preview" key={eachBlog.id} id = {eachBlog.id}>
-                <h2>{eachBlog.title}</h2>
-                <p>Written by: {eachBlog.author} </p>
+                <Link to={`/blogs/${eachBlog.id}`}>
+                  <h2>{eachBlog.title}</h2>
+                  <p>Written by: {eachBlog.author} </p>
+                </Link>
             </div>
         ))}
     </div>
