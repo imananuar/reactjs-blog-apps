@@ -35,7 +35,7 @@ const useFetch = (url) => {
                 }
                 // Only able to display when there is network error
             })
-        }, 1000);
+        }, 100);
 
         return () => abortCont.abort();
     }, [url]);
