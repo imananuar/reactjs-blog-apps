@@ -8,8 +8,10 @@ const useFetch = (url) => {
 
     useEffect(() => {
 
+        const abortCont = new AbortController();
+
         setTimeout(() => {
-            fetch(url)
+            fetch(url, { signal: abortCont.signal })
             .then(response => {
 
                 if (!response.ok) {
@@ -24,11 +26,18 @@ const useFetch = (url) => {
                 setError(null)
             })
             .catch ((err) => {
-                setError(err.message)
-                setIsPending(false)
+
+                if (err.name === 'AbortError'){
+                    console.log('fetch aborted')
+                } else {
+                    setError(err.message)
+                    setIsPending(false)
+                }
                 // Only able to display when there is network error
             })
         }, 1000);
+
+        return () => abortCont.abort();
     }, [url]);
 
     return { data, isPending, error}
